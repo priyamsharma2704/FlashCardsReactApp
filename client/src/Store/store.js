@@ -19,8 +19,3 @@ export const useCardListStore = create((set)=>({
     setCardList: (item)=>set((state)=>({cardsList: [...state.cardsList, item]})),
     updateCardList:(item)=>set((state)=>({cardsList: item}))
 }));
-
-export const useEditStore = create((set) =>({
-    canEdit: false,
-    setCanEdit:(flag) => set((state) =>({canEdit: flag}))
-}));

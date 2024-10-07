@@ -1,7 +1,4 @@
 
-import EditImg from '../assets/pen-to-square-regular.svg';
-import DeleteImg from '../assets/trash-can-regular.svg';
-
 import Card from './Card.jsx';
 import { useCardListStore } from '../Store/store';
 function CardList()
@@ -11,8 +8,8 @@ function CardList()
     return(
         <>
             <div className='cards-list'>
-                {cardsList.map((card) =>(
-                    <Card key={card.id} data={card}></Card>
+                {cardsList.map((card, idx) =>(
+                    <Card key={idx} data={card} index={idx}></Card>
                 ))}
             </div>
         </>
