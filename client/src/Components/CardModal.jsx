@@ -12,7 +12,7 @@ function CardModal()
                             Input fields cannot be empty!
                         </span>
                     </div>
-                    <img id="close-btn" src={Xmark}/>
+                    {/* <img id="close-btn" src={Xmark}/> */}
                 </div>
 
                 <label for="question">Question:</label>
