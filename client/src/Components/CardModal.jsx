@@ -17,11 +17,14 @@ function CardModal()
 
     function handleSave()
     {
-        console.log("Save")
-        setCardList({question, answer});
+        if(question != "" && answer != "")
+        {
+            setShowAddCardModal(false);
+            setCardList({question, answer});
+        }
+
         setQuestion("");
         setAnswer("");
-        setShowAddCardModal(false);
     }
 
     return(
