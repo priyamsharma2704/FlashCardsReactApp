@@ -7,11 +7,12 @@ import { useCardListStore } from '../Store/store';
 function CardList()
 {
     const {cardsList} = useCardListStore();
+    cardsList.map((card,idx)=>(console.log(card)))
     return(
         <>
             <div className='cards-list'>
-                {cardsList.map((card,idx) =>(
-                    <Card key={idx} data={card}></Card>
+                {cardsList.map((card) =>(
+                    <Card key={card.id} data={card}></Card>
                 ))}
             </div>
         </>
