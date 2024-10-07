@@ -1,10 +1,13 @@
 import Xmark from "../assets/xmark-solid.svg";
-import { useModalStore, useCardListStore, useAddCardStore } from "../Store/store";
-function CardModal()
+import uuid from 'react-uuid';
+import { useModalStore, useCardListStore, useAddCardStore, useEditStore } from "../Store/store";
+
+function CardModal({cardId})
 {
     const {question, answer, setQuestion, setAnswer} = useModalStore();
-    const {setCardList} = useCardListStore();
-    const {setShowAddCardModal} = useAddCardStore();
+    const {cardsList, setCardList, updateCardList} = useCardListStore();
+    const {showAddCardModal, setShowAddCardModal} = useAddCardStore();
+    const {canEdit, setCanEdit} = useEditStore();
     function handleQuestion(e)
     {
         setQuestion(e.target.value);
@@ -19,8 +22,27 @@ function CardModal()
     {
         if(question != "" && answer != "")
         {
+            console.log(cardId);
+            if(cardId)
+            {
+                let cardsListCopy = [...cardsList];
+                cardsListCopy.map((card, idx)=>{
+                    if(card.id === cardId)
+                    {
+                        card.question = question;
+                        card.answer = answer
+                    }
+                });
+                updateCardList(cardsListCopy);
+            }
+            else
+            {
+                let id = uuid();
+                setCardList({question, answer, id});
+            }
+
             setShowAddCardModal(false);
-            setCardList({question, answer});
+            setCanEdit(false);
         }
 
         setQuestion("");
@@ -37,7 +59,7 @@ function CardModal()
                             Input fields cannot be empty!
                         </span>
                     </div>
-                    {/* <img id="close-btn" src={Xmark}/> */}
+                    <img id="close-btn" src={Xmark}/>
                 </div>
 
                 <label >Question:</label>

@@ -7,7 +7,7 @@ function AddCard() {
 
     // Function to handle the button click and toggle modal state
     const handleAddCard = () => {
-        setShowAddCardModal();
+        setShowAddCardModal(!showAddCardModal);
     };
 
     return (
