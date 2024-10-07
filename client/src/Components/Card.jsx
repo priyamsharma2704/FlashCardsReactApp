@@ -2,12 +2,12 @@ import {useState} from 'react';
 import EditImg from '../assets/pen-to-square-regular.svg';
 import DeleteImg from '../assets/trash-can-regular.svg';
 import CardModal from './CardModal';
-import { useModalStore, useEditStore } from '../Store/store';
-function Card({data})
+import { useModalStore } from '../Store/store';
+function Card({data, index})
 {
     const [showAnswer, setShowAnswer] = useState(false);
 
-    const {canEdit, setCanEdit} = useEditStore();
+    const [isInEditMode, setIsInEditMode] = useState(false);
     const {setQuestion, setAnswer, setId} = useModalStore();
 
     function handleShowAnswer()
@@ -22,12 +22,17 @@ function Card({data})
         setQuestion(data.question);
         setAnswer(data.answer);
         setId(data.id);
-        setCanEdit(!canEdit);
+        setIsInEditMode(!isInEditMode);
     }
 
     function handleDelete()
     {
         console.log("del")
+    }
+
+    function closeModal()
+    {
+        setIsInEditMode(false);
     }
 
     return(
@@ -41,7 +46,7 @@ function Card({data})
                         <img className='delete' src={DeleteImg} onClick={handleDelete}/>
                     </div>
             </div>
-            {canEdit && <CardModal cardId={data.id}></CardModal>}
+            {isInEditMode && <CardModal index={index} cardId={data.id} closeModal={closeModal}></CardModal>}
         </>
     )
 }

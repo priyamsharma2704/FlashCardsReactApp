@@ -1,13 +1,13 @@
 import Xmark from "../assets/xmark-solid.svg";
 import uuid from 'react-uuid';
-import { useModalStore, useCardListStore, useAddCardStore, useEditStore } from "../Store/store";
+import { useModalStore, useCardListStore, useAddCardStore } from "../Store/store";
 
-function CardModal({cardId})
+function CardModal({index, cardId, closeModal})
 {
-    const {question, answer, setQuestion, setAnswer} = useModalStore();
+    const {id, question, answer, setQuestion, setAnswer} = useModalStore();
     const {cardsList, setCardList, updateCardList} = useCardListStore();
-    const {showAddCardModal, setShowAddCardModal} = useAddCardStore();
-    const {canEdit, setCanEdit} = useEditStore();
+    const {setShowAddCardModal} = useAddCardStore();
+
     function handleQuestion(e)
     {
         setQuestion(e.target.value);
@@ -23,16 +23,11 @@ function CardModal({cardId})
         if(question != "" && answer != "")
         {
             console.log(cardId);
-            if(cardId)
+            if(index != undefined || index != null)
             {
                 let cardsListCopy = [...cardsList];
-                cardsListCopy.map((card, idx)=>{
-                    if(card.id === cardId)
-                    {
-                        card.question = question;
-                        card.answer = answer
-                    }
-                });
+                cardsListCopy[index] = {question, answer, id};
+
                 updateCardList(cardsListCopy);
             }
             else
@@ -42,7 +37,8 @@ function CardModal({cardId})
             }
 
             setShowAddCardModal(false);
-            setCanEdit(false);
+            if(closeModal != undefined)
+                closeModal(false);
         }
 
         setQuestion("");
