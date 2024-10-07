@@ -10,7 +10,6 @@ function CardList()
     return(
         <>
             <div className='cards-list'>
-                <Card></Card>
                 {cardsList.map((card,idx) =>(
                     <Card key={idx} data={card}></Card>
                 ))}
