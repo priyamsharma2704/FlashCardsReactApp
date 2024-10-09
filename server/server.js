@@ -39,7 +39,7 @@ app.get('/getFlashCards', (req, res) =>{
 
 app.put('/updateCard/:id', async (req, res) => {
     const cardId = req.params.id;
-    console.log(cardId);
+
     try {
         const updatedCard = await appsModel.findByIdAndUpdate(
             cardId, 
@@ -62,35 +62,41 @@ app.put('/updateCard/:id', async (req, res) => {
 });
 
 app.post('/addFlashCard', async (req, res) => {
+
     const newCard = new appsModel({
         question: req.body.question,
         answer: req.body.answer
     });
 
-    newCard.save((err, data) =>
+    try{
+        const card = await newCard.save();
+        res.status(200).json({message: "Card added successfully", card});
+    }
+    catch(err)
     {
-        if(err) return console.log(err);
-        res.status(200).json({message: "Card added successfully", data});
-    })
+        console.log(err);
+        res.status(500).json({message: "failed to add card"});
+    }
 })
 
 app.delete('/deleteCard/:id', async (req, res)=>
 {
     const cardId = req.params.id;
-
+    console.log(cardId);
     try{
-        const card = await appsModel.findByIdAndDelete(
-            cardId, (err, deletedCard) =>
-            {
-                if(err) return console.log(err);
-                if (!deletedCard) return res.status(404).json({ message: 'Card not found' });
-                res.status(200).json({message: "Card deleted successfully", deletedCard});
-            })
-    }catch(err)
-    {
+        const card = await appsModel.findByIdAndDelete(cardId);
 
+        if(!card)
+            res.status(404).json({ message: 'Card not found' });
+
+        res.status(200).json({message: "Card deleted successfully", card});
     }
-})
+    catch(err)
+    {
+        console.log(err);
+        res.status(500).json({message: "An error occurred while deleting the card"});
+    }
+});
 
 
 
