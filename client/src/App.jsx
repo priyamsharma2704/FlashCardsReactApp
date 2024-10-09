@@ -9,6 +9,20 @@ import CardList from './Components/CardList.jsx';
 
 function App() 
 {
+    async function getCards()
+    {
+        try{
+            const resp = await fetch("http://localhost:5000/getFlashCards");
+        const data = await resp.json();
+        console.log(data);
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
+    }
+    
+    getCards();
     return (
         <>
             <div className='container'>
