@@ -18,10 +18,9 @@ function Card({data, index})
 
     function handleEdit()
     {
-        console.log(data.id);
         setQuestion(data.question);
         setAnswer(data.answer);
-        setId(data.id);
+        setId(data._id);
         setIsInEditMode(!isInEditMode);
     }
 

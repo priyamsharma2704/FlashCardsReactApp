@@ -28,7 +28,8 @@ function CardModal({index, cardId, closeModal})
                 let cardsListCopy = [...cardsList];
                 cardsListCopy[index] = {question, answer, id};
 
-                updateCardList(cardsListCopy);
+                
+                updateCards(question, answer, id, cardsListCopy);
             }
             else
             {
@@ -66,6 +67,31 @@ function CardModal({index, cardId, closeModal})
         catch(err)
         {
             console.log('Error adding card:', err);
+        }
+    }
+
+    async function updateCards(question, answer, id, cardsArray)
+    {
+        //console.log(question, answer)
+        try
+        {
+            const resp = await fetch(`http://localhost:5000/updateCard/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({question, answer})
+            });
+    
+            const data = await resp.json();
+            console.log("card updated successfully", data.updatedCard._id);
+            
+            updateCardList(cardsArray);
+            
+        }
+        catch(err)
+        {
+            //console.log(err);
         }
     }
 
