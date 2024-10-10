@@ -94,6 +94,11 @@ function CardModal({index, cardId, closeModal})
         }
     }
 
+    function handleCloseBtnClick()
+    {
+        closeModal(false);
+    }
+
     return(
         <>
             <div id="add-card-modal" className="modal">
@@ -104,7 +109,7 @@ function CardModal({index, cardId, closeModal})
                             Input fields cannot be empty!
                         </span>
                     </div>
-                    <img id="close-btn" src={Xmark}/>
+                    <img id="close-btn" src={Xmark} onClick={handleCloseBtnClick}/>
                 </div>
 
                 <label >Question:</label>
