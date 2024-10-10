@@ -39,14 +39,13 @@ app.get('/getFlashCards', (req, res) =>{
 
 app.put('/updateCard/:id', async (req, res) => {
     const cardId = req.params.id;
-    
+
     try {
         const updatedCard = await appsModel.findByIdAndUpdate(
             cardId, 
             {
                 question: req.body.question,
-                answer: req.body.answer,
-                hint: req.body.hint
+                answer: req.body.answer
             }, 
             { new: true }
         );

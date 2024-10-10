@@ -26,9 +26,29 @@ function Card({data, index})
 
     function handleDelete(index)
     {
+        deleteCard();
+    }
+
+    async function deleteCard()
+    {
+        console.log(data._id);
         let cardsListCopy = [...cardsList];
         cardsListCopy.splice(index, 1);
         updateCardList(cardsListCopy);
+
+        try{
+            console.log("try")
+            const resp = await fetch(`http://localhost:5000/deleteCard/${data._id}`, {
+                method: 'DELETE'
+            });
+            console.log("dele");
+            const resp2 = await resp.json();
+            console.log("card deleted successfully", resp2);
+        }
+        catch(err)
+        {
+            console.log("failed to delete the card", err);
+        }
     }
 
     function closeModal()

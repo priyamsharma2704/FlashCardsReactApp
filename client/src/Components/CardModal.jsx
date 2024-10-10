@@ -25,16 +25,11 @@ function CardModal({index, cardId, closeModal})
             //console.log(cardId);
             if(index != undefined || index != null)
             {
-                let cardsListCopy = [...cardsList];
-                cardsListCopy[index] = {question, answer, id};
-
-                
-                updateCards(question, answer, id, cardsListCopy);
+                updateCards(question, answer, id, cardsList, index);
             }
             else
             {
                 setCards(question, answer);
-                
             }
 
             setShowAddCardModal(false);
@@ -61,8 +56,8 @@ function CardModal({index, cardId, closeModal})
 
                 const data = await resp.json();
                 console.log("Card added successfully", data.card._id);
-                let cardId = data.card._id;
-                setCardList({question, answer, cardId});
+                let _id = data.card._id;
+                setCardList({question, answer, _id});
         }
         catch(err)
         {
@@ -70,9 +65,9 @@ function CardModal({index, cardId, closeModal})
         }
     }
 
-    async function updateCards(question, answer, id, cardsArray)
+    async function updateCards(question, answer, id, cardsArray, index)
     {
-        //console.log(question, answer)
+        console.log(id)
         try
         {
             const resp = await fetch(`http://localhost:5000/updateCard/${id}`, {
@@ -85,8 +80,12 @@ function CardModal({index, cardId, closeModal})
     
             const data = await resp.json();
             console.log("card updated successfully", data.updatedCard._id);
-            
-            updateCardList(cardsArray);
+
+            let _id = data.updatedCard._id;
+            let cardsListCopy = [...cardsArray];
+            cardsListCopy[index] = {question, answer, _id};
+
+            updateCardList(cardsListCopy);
             
         }
         catch(err)
