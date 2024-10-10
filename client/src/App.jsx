@@ -14,9 +14,8 @@ const { updateCardList} = useCardListStore();
     {
         try{
             const resp = await fetch("http://localhost:5000/getFlashCards");
-        const data = await resp.json();
-        console.log(data);
-        updateCardList(data);
+            const data = await resp.json();
+            updateCardList(data);
         }
         catch(err)
         {

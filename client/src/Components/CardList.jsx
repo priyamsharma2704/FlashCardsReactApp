@@ -4,7 +4,6 @@ import { useCardListStore } from '../Store/store';
 function CardList()
 {
     const {cardsList} = useCardListStore();
-    cardsList.map((card,idx)=>(console.log(card)))
     return(
         <>
             <div className='cards-list'>
