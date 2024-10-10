@@ -61,8 +61,8 @@ app.put('/updateCard/:id', async (req, res) => {
     }
 });
 
-app.post('/addFlashCard', async (req, res) => {
-
+app.post('/addFlashCard', async (req, res) => 
+{
     const newCard = new appsModel({
         question: req.body.question,
         answer: req.body.answer
