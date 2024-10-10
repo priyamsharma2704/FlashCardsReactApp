@@ -59,8 +59,8 @@ function Card({data, index})
     return(
         <>
             <div className='card'>
-                    <p className='ques'>Question: {data.question}</p>
-                    <p className="ans">Answer: {showAnswer && <span>{data.answer}</span>}</p>
+                    <p className='ques'><strong>Question :</strong> {data.question}</p>
+                    <p className="ans"><strong>Answer :</strong> {showAnswer && <span>{data.answer}</span>}</p>
                     <button className="show-hide-btn" onClick={handleShowAnswer}>Show/Hide</button>
                     <div className="btns-con">
                         <img className='edit' src={EditImg} onClick={handleEdit}></img>
