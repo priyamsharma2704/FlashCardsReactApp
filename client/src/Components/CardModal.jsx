@@ -1,5 +1,5 @@
 import Xmark from "../assets/xmark-solid.svg";
-import uuid from 'react-uuid';
+//import uuid from 'react-uuid';
 import { useModalStore, useCardListStore, useAddCardStore } from "../Store/store";
 
 function CardModal({index, cardId, closeModal})
@@ -22,18 +22,19 @@ function CardModal({index, cardId, closeModal})
     {
         if(question != "" && answer != "")
         {
-            console.log(cardId);
+            //console.log(cardId);
             if(index != undefined || index != null)
             {
                 let cardsListCopy = [...cardsList];
                 cardsListCopy[index] = {question, answer, id};
 
-                updateCardList(cardsListCopy);
+                
+                updateCards(question, answer, id, cardsListCopy);
             }
             else
             {
-                let id = uuid();
-                setCardList({question, answer, id});
+                setCards(question, answer);
+                
             }
 
             setShowAddCardModal(false);
@@ -43,6 +44,55 @@ function CardModal({index, cardId, closeModal})
 
         setQuestion("");
         setAnswer("");
+    }
+
+    async function setCards(question, answer)
+    {
+        console.log(JSON.stringify({question, answer}))
+        try{
+            const resp = await fetch("http://localhost:5000/addFlashCard", 
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({question, answer})
+                });
+
+                const data = await resp.json();
+                console.log("Card added successfully", data.card._id);
+                let cardId = data.card._id;
+                setCardList({question, answer, cardId});
+        }
+        catch(err)
+        {
+            console.log('Error adding card:', err);
+        }
+    }
+
+    async function updateCards(question, answer, id, cardsArray)
+    {
+        //console.log(question, answer)
+        try
+        {
+            const resp = await fetch(`http://localhost:5000/updateCard/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({question, answer})
+            });
+    
+            const data = await resp.json();
+            console.log("card updated successfully", data.updatedCard._id);
+            
+            updateCardList(cardsArray);
+            
+        }
+        catch(err)
+        {
+            //console.log(err);
+        }
     }
 
     return(
